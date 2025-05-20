@@ -1,5 +1,4 @@
-<?php include('inc.header.php') ?>
-            
+<?php include('inc.header.php') ?>          
             
             
             <!-- Page Header Start -->

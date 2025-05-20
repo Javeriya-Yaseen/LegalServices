@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['loginBtn'])) {
                 $_SESSION['Name'] = $lawyer['name'];
                 $_SESSION['Email'] = $lawyer['email'];
 
-                header("Location: lawyer.dashboard.php");
+                header("Location: index.php");
                 exit;
             } else {
                 $loginError = "Invalid email or password.";
