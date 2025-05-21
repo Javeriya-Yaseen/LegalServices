@@ -1,0 +1,142 @@
+<?php
+include('inc.header.php');
+
+// Get appointment ID from query
+$appointment_id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+
+if ($appointment_id <= 0) {
+    echo "<script>alert('Invalid Appointment ID'); window.location.href='appointments.php';</script>";
+    exit;
+}
+
+// Fetch appointment details
+$query = "
+  SELECT * FROM appointments 
+  WHERE appointment_id = $appointment_id
+  LIMIT 1
+";
+$result = mysqli_query($conn, $query);
+$appointment = mysqli_fetch_assoc($result);
+
+if (!$appointment) {
+    echo "<script>alert('Appointment not found'); window.location.href='appointments.php';</script>";
+    exit;
+}
+
+// Fetch customer list
+$customers = mysqli_query($conn, "SELECT user_id, name FROM users WHERE user_type = 'Customer' ORDER BY name ASC");
+
+// Fetch lawyer list with specialization
+$lawyers = mysqli_query($conn, "
+  SELECT u.user_id, u.name, s.specialization_name 
+  FROM users u 
+  JOIN lawyers_profile lp ON u.user_id = lp.lawyer_id 
+  JOIN specializations s ON lp.specialization_id = s.specialization_id
+  WHERE u.user_type = 'Lawyer'
+  ORDER BY u.name ASC
+");
+
+// Handle update
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $customer_id = $_POST['customer_id'];
+    $lawyer_id = $_POST['lawyer_id'];
+    $schedule_date = $_POST['schedule_date'];
+    $status = $_POST['status'];
+    $notes = mysqli_real_escape_string($conn, $_POST['notes']);
+
+    $update = mysqli_query($conn, "
+        UPDATE appointments 
+        SET customer_id = '$customer_id', 
+            lawyer_id = '$lawyer_id', 
+            schedule_date = '$schedule_date',
+            status = '$status',
+            notes = '$notes'
+        WHERE appointment_id = $appointment_id
+    ");
+
+    if ($update) {
+        echo "<script>alert('Appointment updated successfully'); window.location.href='appointments.php';</script>";
+    } else {
+        echo "<div class='alert alert-danger'>Failed to update appointment: " . mysqli_error($conn) . "</div>";
+    }
+}
+?>
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Edit Appointment</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="appointments.php">Appointments</a></li>
+        <li class="breadcrumb-item active">Edit</li>
+      </ol>
+    </nav>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-8">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Update Appointment</h5>
+
+            <form method="post">
+              <div class="mb-3">
+                <label for="customer_id" class="form-label">Customer</label>
+                <select name="customer_id" id="customer_id" class="form-select" required>
+                  <option value="">Select Customer</option>
+                  <?php while ($row = mysqli_fetch_assoc($customers)): ?>
+                    <option value="<?= $row['user_id'] ?>" <?= $row['user_id'] == $appointment['customer_id'] ? 'selected' : '' ?>>
+                      <?= htmlspecialchars($row['name']) ?>
+                    </option>
+                  <?php endwhile; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="lawyer_id" class="form-label">Lawyer</label>
+                <select name="lawyer_id" id="lawyer_id" class="form-select" required>
+                  <option value="">Select Lawyer</option>
+                  <?php while ($row = mysqli_fetch_assoc($lawyers)): ?>
+                    <option value="<?= $row['user_id'] ?>" <?= $row['user_id'] == $appointment['lawyer_id'] ? 'selected' : '' ?>>
+                      <?= htmlspecialchars($row['name']) ?> (<?= htmlspecialchars($row['specialization_name']) ?>)
+                    </option>
+                  <?php endwhile; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="schedule_date" class="form-label">Schedule Date & Time</label>
+                <input type="datetime-local" name="schedule_date" id="schedule_date" class="form-control" 
+                       value="<?= date('Y-m-d\TH:i', strtotime($appointment['schedule_date'])) ?>" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select name="status" id="status" class="form-select" required>
+                  <option value="Pending" <?= $appointment['status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
+                  <option value="Confirmed" <?= $appointment['status'] == 'Confirmed' ? 'selected' : '' ?>>Confirmed</option>
+                  <option value="Completed" <?= $appointment['status'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="notes" class="form-label">Notes</label>
+                <textarea name="notes" id="notes" rows="3" class="form-control"><?= htmlspecialchars($appointment['notes']) ?></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-success">Update Appointment</button>
+              <a href="appointments.php" class="btn btn-secondary">Cancel</a>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<?php include('inc.footer.php'); ?>

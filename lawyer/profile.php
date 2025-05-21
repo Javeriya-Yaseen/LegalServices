@@ -2,7 +2,7 @@
 include('inc.header.php');
 
 // Get logged-in admin ID
-$user_id = $_SESSION['AdminID'] ?? 0;
+$user_id = $_SESSION['LawyerID'] ?? 0;
 
 if ($user_id == 0) {
   echo "<script>alert('Unauthorized access'); window.location.href='login.php';</script>";

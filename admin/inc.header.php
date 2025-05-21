@@ -318,7 +318,7 @@ if(!$_SESSION['AdminLogin']) {
       </a>
       <ul id="appointments-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="book-appointment.php">
+          <a href="appointment.create.php">
             <i class="bi bi-circle"></i><span>Book Appointment</span>
           </a>
         </li>

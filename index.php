@@ -1,4 +1,71 @@
-<?php include('inc.header.php') ?>
+<?php 
+include('inc.header.php'); 
+
+// Prepare filters from GET parameters
+$filterCity = $_GET['city'] ?? '';
+$filterSpec = $_GET['specialization'] ?? '';
+
+// Fetch all cities for filter dropdown
+$citiesResult = $conn->query("SELECT city_id, city_name FROM cities ORDER BY city_name ASC");
+$cities = [];
+while ($row = $citiesResult->fetch_assoc()) {
+    $cities[] = $row;
+}
+
+// Fetch all specializations for filter dropdown
+$specsResult = $conn->query("SELECT specialization_id, specialization_name FROM specializations ORDER BY specialization_name ASC");
+$specializations = [];
+while ($row = $specsResult->fetch_assoc()) {
+    $specializations[] = $row;
+}
+
+// Prepare SQL with optional filters
+$sql = "
+SELECT u.user_id, u.name, u.profile_photo, c.city_name, s.specialization_name
+FROM users u
+LEFT JOIN lawyers_profile lp ON u.user_id = lp.lawyer_id
+LEFT JOIN specializations s ON lp.specialization_id = s.specialization_id
+LEFT JOIN cities c ON u.city_id = c.city_id
+WHERE u.user_type = 'Lawyer' 
+";
+
+$params = [];
+$types = '';
+$conditions = [];
+
+if ($filterCity !== '') {
+    $conditions[] = "u.city_id = ?";
+    $params[] = $filterCity;
+    $types .= 'i';
+}
+if ($filterSpec !== '') {
+    $conditions[] = "lp.specialization_id = ?";
+    $params[] = $filterSpec;
+    $types .= 'i';
+}
+
+if ($conditions) {
+    $sql .= " AND " . implode(" AND ", $conditions);
+}
+
+$sql .= " ORDER BY u.name ASC";
+
+$stmt = $conn->prepare($sql);
+if ($params) {
+    $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+
+$lawyers = [];
+while ($row = $result->fetch_assoc()) {
+    $lawyers[] = $row;
+}
+
+$stmt->close();
+$query = "SELECT specialization_name, service_icon, description FROM specializations ORDER BY specialization_name ASC";
+$result = $conn->query($query);
+?>
 
 
 <!-- Carousel Start -->
@@ -48,6 +115,62 @@
 </div>
 <!-- Carousel End -->
 
+<!-- Filter Section -->
+<div class="container mt-4">
+    <form method="GET" class="row g-3 align-items-center">
+        <div class="col-auto">
+            <select class="form-select" name="city" onchange="this.form.submit()">
+                <option value="">All Cities</option>
+                <?php foreach($cities as $city): ?>
+                <option value="<?= $city['city_id'] ?>" <?= ($filterCity == $city['city_id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($city['city_name']) ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select class="form-select" name="specialization" onchange="this.form.submit()">
+                <option value="">All Specializations</option>
+                <?php foreach($specializations as $spec): ?>
+                <option value="<?= $spec['specialization_id'] ?>" <?= ($filterSpec == $spec['specialization_id']) ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($spec['specialization_name']) ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-auto">
+            <noscript><button type="submit" class="btn btn-primary">Filter</button></noscript>
+        </div>
+    </form>
+</div>
+
+<!-- Lawyers List -->
+<div class="container mt-5">
+    <h2>Our Expert Lawyers</h2>
+    <div class="row">
+        <?php if (count($lawyers) > 0): ?>
+            <?php foreach ($lawyers as $lawyer): ?>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <?php
+                        $photo = $lawyer['profile_photo'] ? "uploads/profiles/{$lawyer['profile_photo']}" : "assets/img/default-user.png";
+                        ?>
+                        <img src="<?= htmlspecialchars($photo) ?>" class="card-img-top" alt="<?= htmlspecialchars($lawyer['name']) ?>" style="height: 250px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($lawyer['name']) ?></h5>
+                            <p class="card-text"><strong>Specialization:</strong> <?= htmlspecialchars($lawyer['specialization_name'] ?? 'N/A') ?></p>
+                            <p class="card-text"><strong>City:</strong> <?= htmlspecialchars($lawyer['city_name'] ?? 'N/A') ?></p>
+                            <a href="lawyer.profile.php?id=<?= $lawyer['user_id'] ?>" class="btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-center">No lawyers found for the selected filters.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
 
 <!-- Top Feature Start-->
 <div class="feature-top">
@@ -93,7 +216,7 @@
         <div class="row align-items-center">
             <div class="col-lg-5 col-md-6">
                 <div class="about-img">
-                    <img src="img/about.jpg" alt="Image">
+                    <img src="img/about.jpg" alt="About Our Law Firm">
                 </div>
             </div>
             <div class="col-lg-7 col-md-6">
@@ -102,18 +225,19 @@
                 </div>
                 <div class="about-text">
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                        At Legal Services, we are committed to providing expert legal advice and representation tailored to the unique needs of each client. With years of experience across multiple specialties, our team of dedicated attorneys works tirelessly to uphold justice and protect your rights.
                     </p>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+                        Our firm combines deep legal knowledge with compassionate client care, ensuring clear communication and strategic solutions. Whether you are facing a complex legal challenge or seeking guidance for future matters, we stand by your side every step of the way, delivering results you can trust.
                     </p>
-                    <a class="btn" href="">Learn More</a>
+                    <a class="btn" href="about.php">Learn More</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- About End -->
+
 
 
 <!-- Service Start -->
@@ -123,78 +247,20 @@
             <h2>Our Practices Areas</h2>
         </div>
         <div class="row">
+            <?php while($row = $result->fetch_assoc()): ?>
             <div class="col-lg-4 col-md-6">
                 <div class="service-item">
                     <div class="service-icon">
-                        <i class="fa fa-landmark"></i>
+                        <?= $row['service_icon'] ?: '<i class="fa fa-briefcase"></i>' ?>
                     </div>
-                    <h3>Civil Law</h3>
+                    <h3><?= htmlspecialchars($row['specialization_name']) ?></h3>
                     <p>
-                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
+                        <?= htmlspecialchars($row['description']) ?>
                     </p>
                     <a class="btn" href="">Learn More</a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="fa fa-users"></i>
-                    </div>
-                    <h3>Family Law</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                    </p>
-                    <a class="btn" href="">Learn More</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="fa fa-hand-holding-usd"></i>
-                    </div>
-                    <h3>Business Law</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                    </p>
-                    <a class="btn" href="">Learn More</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="fa fa-graduation-cap"></i>
-                    </div>
-                    <h3>Education Law</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                    </p>
-                    <a class="btn" href="">Learn More</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="fa fa-gavel"></i>
-                    </div>
-                    <h3>Criminal Law</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                    </p>
-                    <a class="btn" href="">Learn More</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="fa fa-globe"></i>
-                    </div>
-                    <h3>Cyber Law</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non
-                    </p>
-                    <a class="btn" href="">Learn More</a>
-                </div>
-            </div>
+            <?php endwhile; ?>
         </div>
     </div>
 </div>
@@ -216,9 +282,9 @@
                         </div>
                     </div>
                     <div class="col-7">
-                        <h3>Best law practices</h3>
+                        <h3>Experienced Legal Professionals</h3>
                         <p>
-                            Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.
+                            Our team consists of seasoned attorneys with extensive knowledge in various fields of law, ensuring you receive expert guidance and representation.
                         </p>
                     </div>
                 </div>
@@ -229,9 +295,9 @@
                         </div>
                     </div>
                     <div class="col-7">
-                        <h3>Efficiency & Trust</h3>
+                        <h3>Integrity & Trust</h3>
                         <p>
-                            Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.
+                            We prioritize transparency and honesty in every case, building lasting relationships with clients based on trust and ethical practice.
                         </p>
                     </div>
                 </div>
@@ -242,22 +308,23 @@
                         </div>
                     </div>
                     <div class="col-7">
-                        <h3>Results you deserve</h3>
+                        <h3>Client-Focused Results</h3>
                         <p>
-                            Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate.
+                            We are dedicated to achieving the best possible outcomes, tailoring strategies to meet your unique legal needs and goals.
                         </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="feature-img">
-                    <img src="img/feature.jpg" alt="Feature">
+                    <img src="img/feature.jpg" alt="Our Commitment to You">
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Feature End -->
+
 
 
 <!-- Team Start -->
@@ -347,81 +414,82 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="faqs-img">
-                    <img src="img/faqs.jpg" alt="Image">
+                    <img src="img/faqs.jpg" alt="Frequently Asked Questions">
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="section-header">
-                    <h2>Have A Questions?</h2>
+                    <h2>Have Questions?</h2>
                 </div>
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header">
                             <a class="card-link collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="true">
-                                <span>1</span> Lorem ipsum dolor sit amet?
+                                <span>1</span> How do I book a consultation with a lawyer?
                             </a>
                         </div>
                         <div id="collapseOne" class="collapse show" data-parent="#accordion">
                             <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                                You can easily book a consultation by selecting your preferred lawyer and scheduling an appointment through our online booking system.
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <a class="card-link" data-toggle="collapse" href="#collapseTwo">
-                                <span>2</span> Lorem ipsum dolor sit amet?
+                                <span>2</span> What types of legal services do you offer?
                             </a>
                         </div>
                         <div id="collapseTwo" class="collapse" data-parent="#accordion">
                             <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                                We provide a wide range of legal services including criminal law, family law, business law, civil litigation, education law, and cyber law, among others.
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <a class="card-link" data-toggle="collapse" href="#collapseThree">
-                                <span>3</span> Lorem ipsum dolor sit amet?
+                                <span>3</span> How can I find a lawyer specializing in my legal issue?
                             </a>
                         </div>
                         <div id="collapseThree" class="collapse" data-parent="#accordion">
                             <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                                Use our search and filter options to find lawyers by specialization and location to ensure you get the best match for your case.
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <a class="card-link" data-toggle="collapse" href="#collapseFour">
-                                <span>4</span> Lorem ipsum dolor sit amet?
+                                <span>4</span> What are your consultation fees?
                             </a>
                         </div>
                         <div id="collapseFour" class="collapse" data-parent="#accordion">
                             <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                                Consultation fees vary depending on the lawyer and case complexity. You can view fee details on each lawyer's profile before booking.
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
                             <a class="card-link" data-toggle="collapse" href="#collapseFive">
-                                <span>5</span> Lorem ipsum dolor sit amet?
+                                <span>5</span> How is my personal information protected?
                             </a>
                         </div>
                         <div id="collapseFive" class="collapse" data-parent="#accordion">
                             <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non.
+                                We take privacy seriously. All personal data is stored securely and only shared with authorized legal professionals involved in your case.
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="btn" href="">Ask more</a>
+                <a class="btn" href="contact.php">Ask more</a>
             </div>
         </div>
     </div>
 </div>
 <!-- FAQs End -->
+
 
 
 <!-- Testimonial Start -->
