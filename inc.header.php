@@ -83,19 +83,20 @@ $isLoggedIn = isset($_SESSION['CustomerID']);
                             <a href="service.php" class="nav-item nav-link">Practice</a>
                             <a href="team.php" class="nav-item nav-link">Attorneys</a>
                             <a href="portfolio.php" class="nav-item nav-link">Case Studies</a>
-                            <div class="nav-item dropdown">
+                            <!-- <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu">
                                     <a href="blog.php" class="dropdown-item">Blog Page</a>
                                     <a href="single.php" class="dropdown-item">Single Page</a>
                                 </div>
-                            </div>
+                            </div> -->
                             <a href="contact.php" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="ml-auto">
                             <?php if (!$isLoggedIn): ?>
                                 <a class="btn" href="login.php">Login</a>
                             <?php else: ?>
+                                <a class="btn" href="my_appointments.php">My Appointments</a>
                                 <a class="btn" href="userprofile.php">Profile</a>
                                 <a class="btn" href="logout.php">Logout</a>
                             <?php endif; ?>

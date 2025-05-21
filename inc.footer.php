@@ -50,9 +50,9 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="footer-contact">
                                 <h2>Get In Touch</h2>
-                                <p><i class="fa fa-map-marker-alt"></i>123 Street, New York, USA</p>
-                                <p><i class="fa fa-phone-alt"></i>+012 345 67890</p>
-                                <p><i class="fa fa-envelope"></i>info@example.com</p>
+                                <p><i class="fa fa-map-marker-alt"></i>Aptech learning tariq roaq</p>
+                                <p><i class="fa fa-phone-alt"></i>+922 345 67890</p>
+                                <p><i class="fa fa-envelope"></i>aptech@example.com</p>
                                 <div class="footer-social">
                                     <a href=""><i class="fab fa-twitter"></i></a>
                                     <a href=""><i class="fab fa-facebook-f"></i></a>
@@ -78,10 +78,10 @@
                 <div class="container copyright">
                     <div class="row">
                         <div class="col-md-6">
-                            <p>&copy; <a href="https://htmlcodex.com/law-firm-website-template">HTML Codex</a>, All Right Reserved.</p>
+                            <p>&copy; <a href="https://htmlcodex.com/law-firm-website-template">aptech codex</a>, All Right Reserved.</p>
                         </div>
                         <div class="col-md-6">
-                            <p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                            <p>Designed By <a href="https://htmlcodex.com">aptech learning</a></p>
                         </div>
                     </div>
                 </div>
