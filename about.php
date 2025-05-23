@@ -33,10 +33,10 @@
                             </div>
                             <div class="about-text">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem.
+                                    At Legal Services, we are committed to providing expert legal advice and representation tailored to the unique needs of each client. With years of experience across multiple specialties, our team of dedicated attorneys works tirelessly to uphold justice and protect your rights.
                                 </p>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec pretium mi. Curabitur facilisis ornare velit non vulputate. Aliquam metus tortor, auctor id gravida condimentum, viverra quis sem. Curabitur non nisl nec nisi scelerisque maximus. Aenean consectetur convallis porttitor. Aliquam interdum at lacus non blandit.
+                                    Our firm specializes in various areas of law, including family law, criminal defense
                                 </p>
                                 <a class="btn" href="">Learn More</a>
                             </div>
@@ -48,145 +48,121 @@
 
 
             <!-- Timeline Start -->
-            <div class="timeline">
-                <div class="container">
-                    <div class="section-header">
-                        <h2>Learn About Our Journey</h2>
-                    </div>
-                    <div class="timeline-start">
-                        <div class="timeline-container left">
-                            <div class="timeline-content">
-                                <h2><span>2020</span>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="timeline-container right">
-                            <div class="timeline-content">
-                                <h2><span>2019</span>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="timeline-container left">
-                            <div class="timeline-content">
-                                <h2><span>2018</span>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="timeline-container right">
-                            <div class="timeline-content">
-                                <h2><span>2017</span>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="timeline-container left">
-                            <div class="timeline-content">
-                                <h2><span>2016</span>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="timeline-container right">
-                            <div class="timeline-content">
-                                <h2><span>2015</span>Lorem ipsum dolor sit amet</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+<div class="timeline">
+    <div class="container">
+        <div class="section-header">
+            <h2>Learn About Our Journey</h2>
+        </div>
+        <div class="timeline-start">
+            <div class="timeline-container left">
+                <div class="timeline-content">
+                    <h2><span>2020</span>Launch of Our Legal Platform</h2>
+                    <p>
+                        We officially launched our digital platform with the mission to connect individuals with trusted legal professionals across various specialties, all from the comfort of their homes.
+                    </p>
                 </div>
             </div>
-            <!-- Timeline End -->
+            <div class="timeline-container right">
+                <div class="timeline-content">
+                    <h2><span>2021</span>Expanded Lawyer Network Nationwide</h2>
+                    <p>
+                        With the addition of hundreds of verified lawyers from major cities, we expanded our network, allowing clients to easily find legal help based on city and specialization.
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-container left">
+                <div class="timeline-content">
+                    <h2><span>2022</span>Launched Online Appointment System</h2>
+                    <p>
+                        We introduced a seamless online appointment booking system, giving clients the ability to schedule consultations with lawyers securely and efficiently.
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-container right">
+                <div class="timeline-content">
+                    <h2><span>2023</span>Enhanced Profiles & Lawyer Ratings</h2>
+                    <p>
+                        Lawyer profiles were upgraded to include detailed bios, experience, specializations, and user reviews, empowering clients to make informed legal choices.
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-container left">
+                <div class="timeline-content">
+                    <h2><span>2024</span>Customer & Lawyer Dashboards</h2>
+                    <p>
+                        We rolled out intuitive dashboards for both clients and lawyers to manage appointments, update profiles, and track consultations efficiently.
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-container right">
+                <div class="timeline-content">
+                    <h2><span>2025</span>AI-Powered Legal Matching (Coming Soon)</h2>
+                    <p>
+                        We're working on AI-powered lawyer recommendations based on your legal needs, location, and past consultation patterns — ensuring smarter legal help for everyone.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Timeline End -->
+
 
 
             <!-- Team Start -->
-            <div class="team">
-                <div class="container">
-                    <div class="section-header">
-                        <h2>Meet Our Expert Attorneys</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/team-1.jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Adam Phillips</h2>
-                                    <p>Business Consultant</p>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+<div class="team">
+    <div class="container">
+        <div class="section-header">
+            <h2>Meet Our Expert Attorneys</h2>
+        </div>
+        <div class="row">
+            <?php
+            // Fetch lawyers and their profile data
+            $query = "SELECT u.name, s.specialization_name as specialization, u.profile_photo as profile_image, lp.linkedin, lp.facebook, lp.twitter, lp.instagram
+                      FROM Users u
+                      JOIN Lawyers_Profile lp ON u.user_id = lp.lawyer_id
+                      JOIN specializations s ON lp.specialization_id = s.specialization_id
+                      JOIN cities c ON u.city_id = c.city_id
+                      WHERE u.user_type = 'lawyer' LIMIT 8"; // Adjust LIMIT as needed
+
+            $result = mysqli_query($conn, $query);
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $name = htmlspecialchars($row['name']);
+                $specialization = htmlspecialchars($row['specialization']);
+                $image = !empty($row['profile_image']) ? $row['profile_image'] : 'img/default-lawyer.jpg';
+            ?>
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="<?php echo 'lawyer/uploads/profiles/' . $image; ?>" alt="Attorney Image" style="height: 300px; object-fit: cover;">
                         </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/team-2.jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Dylan Adams</h2>
-                                    <p>Criminal Consultant</p>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/team-3.jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Gloria Edwards</h2>
-                                    <p>Divorce Consultant</p>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/team-4.jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Josh Dunn</h2>
-                                    <p>Immigration Consultant</p>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
+                        <div class="team-text">
+                            <h2><?php echo $name; ?></h2>
+                            <p><?php echo $specialization; ?> Lawyer</p>
+                            <div class="team-social">
+                                <?php if (!empty($row['twitter'])): ?>
+                                    <a class="social-tw" href="<?php echo $row['twitter']; ?>"><i class="fab fa-twitter"></i></a>
+                                <?php endif; ?>
+                                <?php if (!empty($row['facebook'])): ?>
+                                    <a class="social-fb" href="<?php echo $row['facebook']; ?>"><i class="fab fa-facebook-f"></i></a>
+                                <?php endif; ?>
+                                <?php if (!empty($row['linkedin'])): ?>
+                                    <a class="social-li" href="<?php echo $row['linkedin']; ?>"><i class="fab fa-linkedin-in"></i></a>
+                                <?php endif; ?>
+                                <?php if (!empty($row['instagram'])): ?>
+                                    <a class="social-in" href="<?php echo $row['instagram']; ?>"><i class="fab fa-instagram"></i></a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Team End -->
+            <?php } ?>
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+
 
 
 

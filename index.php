@@ -153,14 +153,14 @@ $result = $conn->query($query);
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <?php
-                        $photo = $lawyer['profile_photo'] ? "uploads/profiles/{$lawyer['profile_photo']}" : "assets/img/default-user.png";
+                        $photo = $lawyer['profile_photo'] ? "lawyer/uploads/profiles/{$lawyer['profile_photo']}" : "assets/img/default-user.png";
                         ?>
                         <img src="<?= htmlspecialchars($photo) ?>" class="card-img-top" alt="<?= htmlspecialchars($lawyer['name']) ?>" style="height: 250px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($lawyer['name']) ?></h5>
                             <p class="card-text"><strong>Specialization:</strong> <?= htmlspecialchars($lawyer['specialization_name'] ?? 'N/A') ?></p>
                             <p class="card-text"><strong>City:</strong> <?= htmlspecialchars($lawyer['city_name'] ?? 'N/A') ?></p>
-                            <a href="lawyer.profile.php?id=<?= $lawyer['user_id'] ?>" class="btn btn-primary">View Profile</a>
+                            <a href="bookappointment.php?id=<?= $lawyer['user_id'] ?>" class="btn btn-primary">Book Appointment</a>
                         </div>
                     </div>
                 </div>
